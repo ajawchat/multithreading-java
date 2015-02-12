@@ -11,24 +11,33 @@ public class Worker {
 	private ArrayList<Integer> list2 = new ArrayList<Integer>();
 	
 	
-	public synchronized void stageOne(){
-		try {
-			Thread.sleep(1);
-		} catch (InterruptedException e) {
-			e.printStackTrace();
+	// Creating the monitor locks as objects of class "Object"
+	Object lock1 = new Object();
+	Object lock2 = new Object();
+	
+	public void stageOne(){
+		synchronized(lock2){
+			try {
+				Thread.sleep(1);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+			
+			list1.add(random.nextInt(100));
 		}
 		
-		list1.add(random.nextInt(100));
 	}
 	
 	public synchronized void stageTwo(){
-		try {
-			Thread.sleep(1);
-		} catch (InterruptedException e) {
-			e.printStackTrace();
+		synchronized(lock1){
+			try {
+				Thread.sleep(1);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+			
+			list2.add(random.nextInt(100));
 		}
-		
-		list2.add(random.nextInt());
 	}
 	
 	
